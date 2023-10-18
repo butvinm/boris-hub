@@ -40,7 +40,6 @@ jobs:
                   poetry run pip install -U pip
                   poetry install
 
-            - uses: actions/checkout@v3
             - name: Run Mypy
               run: poetry run mypy app
 
@@ -72,6 +71,5 @@ jobs:
                   poetry run pip install -U pip
                   poetry install
 
-            - uses: actions/checkout@v3
             - name: Run tests
               run: poetry run pytest tests
