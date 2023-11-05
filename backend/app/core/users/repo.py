@@ -10,14 +10,24 @@ from app.core.users.models import User
 class UsersRepo(Protocol):
     """Interface for working with user storage."""
 
-    async def put_user(self, user: User) -> User:
-        """Update user in storage, add it if it not exist.
+    async def create_user(self, username: str) -> Optional[User]:
+        """Add user in storage if it not exist.
 
         Args:
-            user: User to put in storage.
+            username: User to put in storage.
 
         Returns:
-            Created user.
+            Created user or None if user with such username already exists.
+        """
+
+    async def update_user(self, user: User) -> Optional[User]:
+        """Update user in storage it if it exists.
+
+        Args:
+            user: User to update.
+
+        Returns:
+            Updated user and None if it not exists.
         """
 
     async def get_users(self) -> list[User]:
@@ -43,8 +53,20 @@ class UsersRepo(Protocol):
         Args:
             user_id: User id to delete.
 
-        Return:
+        Returns:
             Deleted model of user.
+        """
+
+    async def find_users_by_name(self, query: str) -> list[User]:
+        """Find users by part of username.
+
+        Search is case insensitive.
+
+        Args:
+            query: Part of name to search by.
+
+        Returns:
+            List of found users.
         """
 
     async def close(self) -> None:
